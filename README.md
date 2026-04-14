@@ -59,3 +59,18 @@ bin/dev	Inicia o servidor e compila o CSS em tempo real
 bin/rails c	Abre o console interativo para testar códigos Ruby
 bin/rails db:migrate	Aplica novas alterações no banco de dados
 bundle install	Instala novas Gems (bibliotecas) adicionadas
+🤝 Regras de Colaboração
+
+    Proteção de Segredos: Nunca remova o arquivo .env do .gitignore. Senhas pessoais nunca devem ir para o GitHub.
+
+    Novas Features: Sempre crie uma branch nova para suas alterações:
+    git checkout -b feat/nome-da-funcionalidade
+
+    Documentação: Se adicionar uma Gem nova, atualize o README se for necessário configurar algo extra.
+
+👥 Equipe
+
+
+💡 Dica de Ouro
+
+Sempre que baixar atualizações do GitHub (git pull), rode o bundle install e bin/rails db:migrate para garantir que sua máquina está em dia com o que os outros fizeram.

@@ -1,15 +1,25 @@
+# app/models/usuario.rb
 class Usuario < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         authentication_keys: [ :login ]
+         :recoverable, :rememberable, :validatable
 
+  # Permite o uso do campo virtual 'login' para CPF ou Email
   attr_accessor :login
 
-  # Lógica para permitir login com CPF ou Email
+  # Associações 1:1 - O usuário "é" um desses perfis
+  has_one :candidato, dependent: :destroy
+  has_one :instrutor, dependent: :destroy
+  has_one :gestor,    dependent: :destroy
+
+  # Validações de segurança
+  validates :cpf, presence: true, uniqueness: true
+  validates :nome, presence: true
+
+  # Lógica para o Devise aceitar CPF ou Email no login
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))
-      where(conditions.to_h).where([ "cpf = :value OR lower(email) = :value", { value: login.downcase } ]).first
+      where(conditions.to_h).where([ "cpf = :value OR lower(email) = lower(:value)", { value: login } ]).first
     elsif conditions.has_key?(:cpf) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end

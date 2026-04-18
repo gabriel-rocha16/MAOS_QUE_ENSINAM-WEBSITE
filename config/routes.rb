@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resources :candidatos, only: [:new, :create]
   resources :instrutores, only: [:new, :create]
 
+  get 'dashboard_admin', to: 'dashboards#admin'
+  get 'dashboard_aluno', to: 'dashboards#aluno'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

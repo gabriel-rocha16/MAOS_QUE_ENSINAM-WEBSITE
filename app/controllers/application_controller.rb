@@ -7,8 +7,13 @@ class ApplicationController < ActionController::Base
   end
   # Redireciona após o login normal (caso já tenha conta)
   def after_sign_in_path_for(resource)
-    # Por padrão, vamos jogar na root ou em um dashboard genérico
-    root_path
+    if resource.gestor.present?
+      dashboard_admin_path
+    elsif resource.candidato.present?
+      dashboard_aluno_path
+    else
+      root_path
+    end
   end
 
   protected

@@ -14,6 +14,7 @@ class Usuario < ApplicationRecord
   # Validações de segurança
   validates :cpf, presence: true, uniqueness: true
   validates :nome, presence: true
+  validate :cpf_valido
 
   # Promove o usuário atual a Instrutor, se ele ainda não for
   def promover_a_instrutor!
@@ -33,6 +34,14 @@ class Usuario < ApplicationRecord
       where(conditions.to_h).where([ "cpf = :value OR lower(email) = lower(:value)", { value: login } ]).first
     elsif conditions.has_key?(:cpf) || conditions.has_key?(:email)
       where(conditions.to_h).first
+    end
+  end
+
+  private
+
+  def cpf_valido
+    if cpf.present? && !CPF.valid?(cpf)
+      errors.add(:cpf, "inválido")
     end
   end
 end

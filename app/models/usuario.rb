@@ -15,6 +15,17 @@ class Usuario < ApplicationRecord
   validates :cpf, presence: true, uniqueness: true
   validates :nome, presence: true
 
+  # Promove o usuário atual a Instrutor, se ele ainda não for
+  def promover_a_instrutor!
+    unless instrutor.present?
+      create_instrutor!(
+        formacao_academica: "Pendente",
+        capacitacao: "Pendente",
+        bio: "Pendente"
+      )
+    end
+  end
+
   # Lógica para o Devise aceitar CPF ou Email no login
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

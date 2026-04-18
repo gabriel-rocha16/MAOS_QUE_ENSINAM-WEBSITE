@@ -1,2 +1,0 @@
-class Deficiencium < ApplicationRecord
-end

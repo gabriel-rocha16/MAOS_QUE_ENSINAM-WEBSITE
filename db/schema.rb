@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_15_155507) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_21_204722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,9 +58,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_155507) do
     t.string "area"
     t.integer "carga_horaria"
     t.datetime "created_at", null: false
-    t.bigint "instrutor_id", null: false
+    t.text "descricao"
+    t.bigint "instrutor_id"
     t.string "nome"
+    t.integer "status", default: 0
+    t.string "titulo"
     t.datetime "updated_at", null: false
+    t.string "video_url"
     t.index ["instrutor_id"], name: "index_cursos_on_instrutor_id"
   end
 
@@ -102,6 +106,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_155507) do
     t.index ["candidato_id"], name: "index_laudos_on_candidato_id"
   end
 
+  create_table "matriculas", force: :cascade do |t|
+    t.bigint "candidato_id", null: false
+    t.boolean "concluido", default: false
+    t.datetime "created_at", null: false
+    t.bigint "curso_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["candidato_id"], name: "index_matriculas_on_candidato_id"
+    t.index ["curso_id"], name: "index_matriculas_on_curso_id"
+  end
+
   create_table "usuarios", force: :cascade do |t|
     t.string "cpf"
     t.datetime "created_at", null: false
@@ -124,4 +138,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_155507) do
   add_foreign_key "gestores", "usuarios"
   add_foreign_key "instrutors", "usuarios"
   add_foreign_key "laudos", "candidatos"
+  add_foreign_key "matriculas", "candidatos"
+  add_foreign_key "matriculas", "cursos"
 end

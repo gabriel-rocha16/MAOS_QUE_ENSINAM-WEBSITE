@@ -1,76 +1,73 @@
-👐 WEBSITE: Mãos que Ensinam
+# 👐 Mãos que Ensinam
 
-O Mãos que Ensinam é uma plataforma de gestão de cursos desenvolvida com foco em performance e modernidade, utilizando a stack mais recente do ecossistema Ruby em 2026.
-🛠️ Tecnologias Principais
+**Missão:** Uma plataforma web de educação inclusiva, projetada para quebrar barreiras e conectar conhecimento a quem mais precisa. O projeto oferece vitrines de cursos voltados para impacto social, com acessibilidade e suporte de dashboards dinâmicos.
 
-    Linguagem: Ruby 4.0.2
+---
 
-    Framework: Rails 8.1.3
+## 🛠 Stack Técnica
 
-    Banco de Dados: PostgreSQL 16+
+- **Ruby on Rails 8.1.3** - Motor e orquestração do backend
+- **PostgreSQL 16+** - Banco de dados relacional robusto
+- **Tailwind CSS v4** - Estilização inteligente e baseada em utilitários
+- **Devise** - Autenticação segura
 
-    CSS: Tailwind CSS (nativo via Rails 8)
+---
 
-🚀 Como Preparar o Ambiente
+## 🚀 Funcionalidades Core
 
-Para que o projeto rode perfeitamente, siga os passos abaixo de acordo com o seu sistema operacional.
-1. Pré-requisitos
+✅ **Login Híbrido (CPF/E-mail):** Os usuários podem acessar a plataforma utilizando tanto o seu CPF (com validação real usando a gem `cpf_cnpj`) quanto o E-mail de cadastro.  
+✅ **Separação Inteligente de Perfis:** Modelagem limpa com associações (1:1) separando `Candidato`, `Instrutor` e `Gestor`. Cada perfil acessa apenas o que deve.  
+✅ **Sistema de Matrículas e Cursos:** Vitrine de cursos com fluxo de inscrição (`Matricula`), status de publicação e reprodutor de vídeos embutido.  
 
-    Linux (Zorin/Ubuntu): Ter rbenv ou rvm instalado.
+---
 
-    Windows: Obrigatório o uso de WSL2 com Ubuntu. Rodar Ruby diretamente no Windows não é recomendado para este projeto.
+## 🔒 Arquitetura de Segurança e Gatekeeping
 
-    Banco de Dados: Ter o PostgreSQL instalado e o serviço rodando.
+A aplicação foi rigorosamente trancada. Nenhuma rota é exposta publicamente a não ser que tenha sido declarada no Controller como uma exceção segura (`skip_before_action`).
 
-2. Configuração Inicial (O pulo do gato)
+- **Rotas Públicas:** Landing Page (`/`), Sobre, Contato e Login/Cadastro.
+- **Vitrine de Cursos:** Disponível apenas para usuários autenticados (qualquer nível).
+- **Dashboard Aluno:** Restrito a usuários com perfil associado de Candidato.
+- **Dashboard Admin:** Restrito a usuários com perfil de Gestor.
+- **Criação/Edição de Cursos:** Apenas Instrutores donos dos seus cursos ou o próprio Administrador podem gerenciar esse conteúdo.
 
-O projeto utiliza variáveis de ambiente para proteger suas senhas pessoais.
+---
 
-    Clone o repositório:
-    Bash
+## ⚙️ Guia de Instalação
 
-    git clone https://github.com/seu-usuario/maos-que-ensinam.git
-    cd maos-que-ensinam
+1. Clone o repositório em sua máquina:
+```bash
+git clone https://github.com/gabriel-rocha16/M-os-que-ensinam-WEBSITE.git
+cd M-os-que-ensinam-WEBSITE
+```
 
-    Rode o Setup Automático:
-    Executamos um script que instala as bibliotecas e prepara o banco de dados:
-    Bash
+2. Instale as dependências Ruby:
+```bash
+bundle install
+```
 
-    bin/setup
+3. Configure o Banco de Dados, rode as migrações e popule o projeto com as Seeds iniciais usando o super comando:
+```bash
+rails db:drop db:create db:migrate db:seed
+```
 
-3. "Deu erro de conexão com o banco?"
+4. Suba o servidor com o watcher do Tailwind rodando simultaneamente:
+```bash
+./bin/dev
+```
 
-Se o comando acima falhar no passo de Preparing database, não entre em pânico!
+Acesse no navegador: **http://localhost:3000**
 
-    O script criou um arquivo chamado .env na raiz do seu projeto.
+---
 
-    Abra esse arquivo e coloque o seu usuário e a sua senha do PostgreSQL:
-    Plaintext
+## 🔑 Credenciais de Teste
 
-    DB_USER=seu_usuario_aqui
-    DB_PASSWORD=sua_senha_aqui
+Para facilitar o desenvolvimento inicial, o comando de `db:seed` já popula o banco de dados e imprime no seu terminal o CPF dinâmico gerado. Mas, graças ao login híbrido, você pode acessar usando os e-mails:
 
-    Salve o arquivo e rode bin/setup novamente.
+| Perfil | E-mail de Acesso | Senha |
+| --- | --- | --- |
+| **Admin Gestor** | `admin@maos.com` | `password123` |
+| **Candidato 1** | `joao@teste.com` | `password123` |
+| **Candidato 2** | `maria@teste.com` | `password123` |
 
-🏗️ Estrutura de Desenvolvimento
-Comandos Essenciais
-Comando	O que faz
-bin/dev	Inicia o servidor e compila o CSS em tempo real
-bin/rails c	Abre o console interativo para testar códigos Ruby
-bin/rails db:migrate	Aplica novas alterações no banco de dados
-bundle install	Instala novas Gems (bibliotecas) adicionadas
-🤝 Regras de Colaboração
-
-    Proteção de Segredos: Nunca remova o arquivo .env do .gitignore. Senhas pessoais nunca devem ir para o GitHub.
-
-    Novas Features: Sempre crie uma branch nova para suas alterações:
-    git checkout -b feat/nome-da-funcionalidade
-
-    Documentação: Se adicionar uma Gem nova, atualize o README se for necessário configurar algo extra.
-
-👥 Equipe
-
-
-💡 Dica de Ouro
-
-Sempre que baixar atualizações do GitHub (git pull), rode o bundle install e bin/rails db:migrate para garantir que sua máquina está em dia com o que os outros fizeram.
+*(O seed também gera Cursos teste para você visualizar a vitrine logo de cara!)*

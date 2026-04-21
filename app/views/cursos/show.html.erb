@@ -1,0 +1,19 @@
+<h1><%= @curso.titulo %></h1>
+<h3>Área: <%= @curso.area %></h3>
+
+<p><strong>Descrição:</strong> <%= @curso.descricao %></p>
+
+<p>
+  <a href="<%= @curso.video_url %>" target="_blank">Assistir Vídeo</a>
+</p>
+
+<% if current_usuario&.candidato.present? %>
+  <% if current_usuario.candidato.cursos.include?(@curso) %>
+    <p><em>Você já está matriculado neste curso.</em></p>
+  <% else %>
+    <%= button_to "Matricular-se", matricular_curso_path(@curso), method: :post %>
+  <% end %>
+<% end %>
+
+<br>
+<%= link_to "Voltar para Cursos", cursos_path %>

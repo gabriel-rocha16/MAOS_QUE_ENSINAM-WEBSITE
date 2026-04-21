@@ -55,3 +55,22 @@ user2.create_candidato!(
 puts "Candidato 2 criado! CPF: #{candidato2_cpf} | Senha: password123"
 
 puts "Seeds concluídos com sucesso!"
+
+puts "Criando Cursos de teste..."
+curso1 = Curso.create!(
+  nome: "Introdução a Libras",
+  area: "Línguas",
+  titulo: "Aprenda o básico de Libras",
+  descricao: "Um curso completo para iniciantes na Língua Brasileira de Sinais.",
+  video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  status: :publicado
+)
+curso2 = Curso.create!(
+  nome: "Acessibilidade Web",
+  area: "Tecnologia",
+  titulo: "Construindo sites para todos",
+  descricao: "Aprenda a criar interfaces digitais inclusivas.",
+  video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  status: :publicado
+)
+puts "Cursos criados!"

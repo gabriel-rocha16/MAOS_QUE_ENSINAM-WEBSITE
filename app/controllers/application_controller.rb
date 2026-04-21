@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
-  # Adiciona a chamada de configuração do Devise antes de qualquer ação
+  before_action :authenticate_usuario!
   before_action :configure_permitted_parameters, if: :devise_controller?
+
+  def verificar_admin!
+    redirect_to root_path, alert: "Acesso negado. Apenas administradores." unless current_usuario&.gestor.present?
+  end
+
+  def verificar_instrutor_ou_admin!
+    redirect_to root_path, alert: "Acesso negado." unless current_usuario&.gestor.present? || current_usuario&.instrutor.present?
+  end
 
   def after_sign_up_path_for(resource)
     new_candidato_path
@@ -8,9 +16,9 @@ class ApplicationController < ActionController::Base
   # Redireciona após o login normal (caso já tenha conta)
   def after_sign_in_path_for(resource)
     if resource.gestor.present?
-      dashboard_admin_path
+      admin_dashboard_path
     elsif resource.candidato.present?
-      dashboard_aluno_path
+      aluno_dashboard_path
     else
       root_path
     end

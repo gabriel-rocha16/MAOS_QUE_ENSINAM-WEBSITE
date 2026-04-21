@@ -1,5 +1,5 @@
 class DashboardsController < ApplicationController
-  before_action :authenticate_usuario!
+  before_action :verificar_admin!, only: [:admin]
 
   def admin
   end

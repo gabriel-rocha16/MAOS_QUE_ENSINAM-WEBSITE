@@ -3,7 +3,8 @@ class Candidato < ApplicationRecord
   belongs_to :usuario
 
   # Associações N:N com as Join Tables
-  has_and_belongs_to_many :cursos
+  has_many :matriculas, dependent: :destroy
+  has_many :cursos, through: :matriculas
   has_and_belongs_to_many :beneficios
   has_and_belongs_to_many :deficiencias
 

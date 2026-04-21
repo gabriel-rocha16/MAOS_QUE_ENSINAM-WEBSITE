@@ -1,18 +1,25 @@
 Rails.application.routes.draw do
-  get "pages/home"
   devise_for :usuarios
 
-  get "/login", to: "devise/sessions#new", as: :login
-  get "/signup", to: "devise/registrations#new", as: :signup
+  devise_scope :usuario do
+    get 'login', to: 'devise/sessions#new'
+    get 'signup', to: 'devise/registrations#new'
+    delete 'logout', to: 'devise/sessions#destroy'
+  end
 
   resources :candidatos, only: [ :new, :create ]
   resources :instrutores, only: [ :new, :create ]
+  
+  resources :cursos do
+    member do
+      post :matricular
+    end
+  end
 
-  get "dashboard_admin", to: "dashboards#admin"
-  get "dashboard_aluno", to: "dashboards#aluno"
+  get 'admin/dashboard', to: 'dashboards#admin', as: :admin_dashboard
+  get 'aluno/dashboard', to: 'dashboards#aluno', as: :aluno_dashboard
 
   get "about", to: "pages#about"
-  get "cursos", to: "pages#cursos"
   get "contact", to: "pages#contact"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

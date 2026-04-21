@@ -17,12 +17,24 @@
       </div>
 
       <div class="hidden md:flex items-center gap-4">
-        <%= link_to "Entrar", login_path,
-          data: { navbar_target: "loginBtn" },
-          class: "px-5 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300" %>
+        <% if usuario_signed_in? %>
+          <span class="text-white font-medium mr-2">Olá, <%= current_usuario.nome.split(" ").first %></span>
+          
+          <% if current_usuario.gestor.present? %>
+            <%= link_to "Painel Admin", admin_dashboard_path, class: "px-5 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300" %>
+          <% elsif current_usuario.candidato.present? %>
+            <%= link_to "Meu Painel", aluno_dashboard_path, class: "px-5 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300" %>
+          <% end %>
 
-        <%= link_to "Começar Agora", signup_path,
-          class: "px-6 py-2 rounded-full bg-yellow-400 text-black font-semibold hover:bg-yellow-500 transition duration-300" %>
+          <%= link_to "Sair", logout_path, data: { turbo_method: :delete }, class: "px-6 py-2 rounded-full bg-red-500 text-white font-semibold hover:bg-red-600 transition duration-300" %>
+        <% else %>
+          <%= link_to "Entrar", login_path,
+            data: { navbar_target: "loginBtn" },
+            class: "px-5 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300" %>
+
+          <%= link_to "Começar Agora", signup_path,
+            class: "px-6 py-2 rounded-full bg-yellow-400 text-black font-semibold hover:bg-yellow-500 transition duration-300" %>
+        <% end %>
       </div>
 
     </div>

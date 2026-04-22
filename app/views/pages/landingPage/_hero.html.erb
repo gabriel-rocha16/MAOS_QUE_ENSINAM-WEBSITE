@@ -1,11 +1,57 @@
-<section class="relative h-screen w-full">
-  <%= image_tag "hero-bg.png", class: "w-full h-full object-cover" %>
+<section class="relative min-h-screen w-full flex flex-col justify-center">
+  <%= image_tag "hero-bg.png", class: "absolute inset-0 w-full h-full object-cover z-0" %>
   
-  <div class="absolute inset-0 bg-gradient-to-r from-[#003366]/90 via-[#003366]/70 to-[#003366]/40"></div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-r from-[#003366]/95 via-[#003366]/80 to-[#003366]/50"></div>
 
-  <div class="absolute inset-0 z-10">
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-6 pt-24 pb-32 md:pb-16">
+    
+    <div class="inline-flex items-center gap-2 border border-yellow-400 text-yellow-400 px-4 py-1.5 rounded-full text-sm font-medium mb-6 w-max mt-8 md:mt-0">
+      <i data-lucide="heart" class="w-4 h-4"></i>
+      ONG Mãos que Ensinam
     </div>
+
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-4 md:mb-6">
+      Educação que <br>
+      <span class="text-yellow-400">Transforma</span> Vidas
+    </h1>
+
+    <p class="text-base md:text-lg text-gray-200 max-w-xl mb-8 md:mb-10 leading-relaxed pr-4">
+      Cursos gratuitos e acessíveis para pessoas com deficiência. 
+      Aprenda no seu ritmo, com tecnologia adaptada às suas necessidades.
+    </p>
+
+    <div class="grid grid-cols-2 gap-y-6 gap-x-4 md:flex md:gap-16 mb-10 md:mb-12">
+      <div class="flex flex-col">
+        <span class="text-3xl md:text-4xl font-bold text-yellow-400">2.400+</span>
+        <span class="text-sm text-gray-200 mt-1">Alunos formados</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-3xl md:text-4xl font-bold text-yellow-400">48</span>
+        <span class="text-sm text-gray-200 mt-1">Cursos disponíveis</span>
+      </div>
+      <div class="flex flex-col col-span-2 md:col-span-1">
+        <span class="text-3xl md:text-4xl font-bold text-yellow-400">100%</span>
+        <span class="text-sm text-gray-200 mt-1">Gratuito</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4">
+      <%= link_to signup_path, class: "inline-flex items-center justify-center gap-2 bg-yellow-400 text-blue-900 font-semibold px-6 py-3.5 md:px-8 md:py-3 rounded-full hover:bg-yellow-500 transition-colors duration-300 w-full sm:w-auto text-base" do %>
+        <i data-lucide="user-plus" class="w-5 h-5"></i>
+        Criar Conta Grátis
+      <% end %>
+
+      <%= link_to cursos_path, class: "inline-flex items-center justify-center gap-2 border border-white text-white font-semibold px-6 py-3.5 md:px-8 md:py-3 rounded-full hover:bg-white/10 transition-colors duration-300 w-full sm:w-auto text-base" do %>
+        <i data-lucide="book-open" class="w-5 h-5"></i>
+        Conhecer Cursos
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="absolute bottom-20 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 md:gap-2 text-white/80 z-10">
+    <span class="text-xs font-medium">Role para baixo</span>
+    <i data-lucide="arrow-down" class="w-4 h-4 animate-bounce"></i>
+  </div>
 </section>
-<div class="h-screen bg-gray-200 flex items-center justify-center">
-  <p class="text-gray-500 text-xl">Continue rolando para testar a Navbar...</p>
-</div>
+

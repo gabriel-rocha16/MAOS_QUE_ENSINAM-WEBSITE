@@ -1,5 +1,6 @@
 class CandidatosController < ApplicationController
   before_action :authenticate_usuario!
+  skip_before_action :verificar_onboarding, only: [:new, :create]
 
   def new
     @candidato = current_usuario.build_candidato

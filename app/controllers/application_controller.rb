@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_usuario!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :verificar_onboarding, unless: :devise_controller?
 
   def verificar_admin!
     redirect_to root_path, alert: "Acesso negado. Apenas administradores." unless current_usuario&.gestor.present?
@@ -25,6 +26,14 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def verificar_onboarding
+    if usuario_signed_in? && !current_usuario.gestor.present?
+      unless current_usuario.candidato.present? || current_usuario.instrutor.present?
+        redirect_to new_candidato_path, alert: "Você precisa completar seu perfil para continuar."
+      end
+    end
+  end
 
   def configure_permitted_parameters
     # Permite nome e cpf no cadastro (sign_up)

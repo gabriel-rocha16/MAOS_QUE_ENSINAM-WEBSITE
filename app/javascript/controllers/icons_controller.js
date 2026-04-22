@@ -1,6 +1,15 @@
 import { Controller } from "@hotwired/stimulus";
-// Trocamos House por Home aqui
-import { createIcons, Home, GraduationCap, BookOpen, Phone } from "lucide";
+// Adicionamos Heart, UserPlus e ArrowDown na importação
+import {
+  createIcons,
+  Home,
+  GraduationCap,
+  BookOpen,
+  Phone,
+  Heart,
+  UserPlus,
+  ArrowDown,
+} from "lucide";
 
 export default class extends Controller {
   connect() {
@@ -10,6 +19,9 @@ export default class extends Controller {
         GraduationCap,
         BookOpen,
         Phone,
+        Heart,
+        UserPlus,
+        ArrowDown,
       },
     });
   }

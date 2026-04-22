@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActionController::RoutingError, with: :not_found
+
   before_action :authenticate_usuario!
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :verificar_onboarding, unless: :devise_controller?
@@ -27,9 +30,17 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def not_found
+    redirect_to root_path, alert: "Ops! A página que você procurava não existe ou foi movida."
+  end
+
   def verificar_onboarding
     if usuario_signed_in? && !current_usuario.gestor.present?
-      unless current_usuario.candidato.present? || current_usuario.instrutor.present?
+      if current_usuario.candidato.present?
+        if current_usuario.candidato.pendente?
+          redirect_to root_path, alert: "Seu laudo está em análise por nossa equipe técnica. O acesso aos cursos será liberado após a validação."
+        end
+      elsif !current_usuario.instrutor.present?
         redirect_to new_candidato_path, alert: "Você precisa completar seu perfil para continuar."
       end
     end

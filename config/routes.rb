@@ -30,4 +30,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "pages#home"
+
+  # Rota catch-all redirecionando rotas inexistentes para a home
+  match "*path", to: "application#not_found", via: :all
 end

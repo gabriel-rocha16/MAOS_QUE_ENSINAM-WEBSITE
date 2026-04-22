@@ -38,7 +38,9 @@ class ApplicationController < ActionController::Base
     if usuario_signed_in? && !current_usuario.gestor.present?
       if current_usuario.candidato.present?
         if current_usuario.candidato.pendente?
-          redirect_to root_path, alert: "Seu laudo está em análise por nossa equipe técnica. O acesso aos cursos será liberado após a validação."
+          unless request.path == aluno_dashboard_path
+            redirect_to aluno_dashboard_path, alert: "Seu perfil está pendente de validação."
+          end
         end
       elsif !current_usuario.instrutor.present?
         redirect_to new_candidato_path, alert: "Você precisa completar seu perfil para continuar."

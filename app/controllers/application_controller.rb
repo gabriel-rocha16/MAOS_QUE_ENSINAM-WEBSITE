@@ -28,11 +28,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  protected
-
   def not_found
     redirect_to root_path, alert: "Ops! A página que você procurava não existe ou foi movida."
   end
+
+  protected
 
   def verificar_onboarding
     if usuario_signed_in? && !current_usuario.gestor.present?

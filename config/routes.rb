@@ -33,5 +33,5 @@ Rails.application.routes.draw do
   root "pages#home"
 
   # Rota catch-all redirecionando rotas inexistentes para a home
-  match "*path", to: "application#not_found", via: :all
+  match "*path", to: "application#not_found", via: :all, constraints: lambda { |req| req.path.exclude? 'rails/active_storage' }
 end

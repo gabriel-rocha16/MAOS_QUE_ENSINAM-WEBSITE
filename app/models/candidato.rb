@@ -21,7 +21,10 @@ class Candidato < ApplicationRecord
 
   # Validações para garantir que o formulário obrigatório seja preenchido
   validates :cidade, :estado, :data_nascimento, :escolaridade, presence: true
-  validates :trabalhando, :possui_deficiencia, :possui_beneficio, inclusion: { in: [true, false] }
+  validates :trabalhando, :possui_beneficio, inclusion: { in: [true, false] }
+  
+  # Regra de Negócio: Exclusividade PcD
+  validates :possui_deficiencia, acceptance: { accept: [true, '1', 1], message: 'deve ser confirmada. Esta plataforma é exclusiva para pessoas com deficiência.' }
 
   # Método auxiliar para o fluxo de acessibilidade
   def pode_acessar_cursos_gratuitos?

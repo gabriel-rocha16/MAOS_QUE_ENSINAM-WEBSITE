@@ -26,6 +26,14 @@ Rails.application.routes.draw do
         patch :promover_instrutor
       end
     end
+    
+    resources :cursos, only: [] do
+      member do
+        patch :solicitar_aprovacao
+        patch :publicar
+        patch :rejeitar
+      end
+    end
   end
 
   get "aluno/dashboard", to: "dashboards#aluno", as: :aluno_dashboard

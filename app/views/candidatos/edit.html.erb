@@ -34,7 +34,7 @@
       </div>
       <div>
         <%= f.label :telefone, "Telefone", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.text_field :telefone, placeholder: "(00) 00000-0000", class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
+        <%= f.text_field :telefone, placeholder: "(00) 00000-0000 ou +55...", data: { controller: "telefone-mask" }, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
       </div>
     </div>
 

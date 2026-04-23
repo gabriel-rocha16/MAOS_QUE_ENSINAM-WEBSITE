@@ -15,6 +15,8 @@ class Candidato < ApplicationRecord
   has_many_attached :laudos_medicos
   has_one_attached :curriculo
 
+  before_validation :limpar_telefone
+
   validates :laudos_medicos, attached: true,
                              content_type: ['application/pdf', 'image/jpeg', 'image/png'],
                              size: { less_than: 5.megabytes },
@@ -22,7 +24,10 @@ class Candidato < ApplicationRecord
 
   # Validações para garantir que o formulário obrigatório seja preenchido
   validates :cidade, :estado, :data_nascimento, :escolaridade, :telefone, :tipo_deficiencia, presence: true
-  validates :curriculo, attached: true, content_type: ['application/pdf'], size: { less_than: 5.megabytes }
+  validates :telefone, format: { with: /\A\d+\z/, message: "deve conter apenas números" }, if: -> { telefone.present? }
+  validates :curriculo, attached: true, 
+                        content_type: ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'], 
+                        size: { less_than: 5.megabytes }
   validates :trabalhando, :possui_beneficio, inclusion: { in: [true, false] }
   
   # Regra de Negócio: Exclusividade PcD
@@ -30,6 +35,29 @@ class Candidato < ApplicationRecord
 
   # Método auxiliar para o fluxo de acessibilidade
   def pode_acessar_cursos_gratuitos?
-    possui_deficiencia && deficiencias.any?
+    validado? && possui_deficiencia
+  end
+
+  def telefone_formatado
+    return "" if telefone.blank?
+    if telefone.length == 13 && telefone.start_with?("55")
+      "+#{telefone[0..1]} (#{telefone[2..3]}) #{telefone[4..8]}-#{telefone[9..12]}"
+    elsif telefone.length == 12 && telefone.start_with?("55")
+      "+#{telefone[0..1]} (#{telefone[2..3]}) #{telefone[4..7]}-#{telefone[8..11]}"
+    else
+      "+#{telefone}"
+    end
+  end
+
+  private
+
+  def limpar_telefone
+    if telefone.present?
+      self.telefone = telefone.gsub(/\D/, '')
+      # Assumir DDI do Brasil (55) se o usuário digitou apenas o número local
+      if telefone.length == 10 || telefone.length == 11
+        self.telefone = "55#{telefone}"
+      end
+    end
   end
 end

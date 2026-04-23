@@ -23,6 +23,10 @@ import {
   HeartHandshake,
   ShieldCheck,
   LogIn,
+  Mail,
+  MessageCircle,
+  MapPin,
+  Send,
 } from "lucide";
 
 export default class extends Controller {
@@ -50,7 +54,11 @@ export default class extends Controller {
         Captions,
         HeartHandshake,
         ShieldCheck,
-        LogIn, // Adicionado aqui
+        LogIn,
+        Mail, // Novo (E-mail)
+        MessageCircle, // Novo (WhatsApp)
+        MapPin, // Novo (Endereço)
+        Send, // Novo (Botão Enviar)
       },
     });
   }

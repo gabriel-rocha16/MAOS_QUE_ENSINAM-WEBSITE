@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_23_190315) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_23_195417) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -95,8 +95,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_23_190315) do
     t.integer "status", default: 0
     t.string "titulo"
     t.datetime "updated_at", null: false
+    t.bigint "usuario_id"
     t.string "video_url"
     t.index ["instrutor_id"], name: "index_cursos_on_instrutor_id"
+    t.index ["usuario_id"], name: "index_cursos_on_usuario_id"
   end
 
   create_table "deficiencias", force: :cascade do |t|
@@ -167,6 +169,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_23_190315) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "candidatos", "usuarios"
   add_foreign_key "cursos", "instrutors"
+  add_foreign_key "cursos", "usuarios"
   add_foreign_key "gestores", "usuarios"
   add_foreign_key "instrutors", "usuarios"
   add_foreign_key "laudos", "candidatos"

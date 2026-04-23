@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get "admin/dashboard", to: "dashboards#admin", as: :admin_dashboard
+  get "admin/dashboard", to: "admin/dashboard#index", as: :admin_dashboard
   get "aluno/dashboard", to: "dashboards#aluno", as: :aluno_dashboard
 
   get "about", to: "pages#about"

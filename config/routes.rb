@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :candidatos, only: [ :new, :create ]
+  resource :candidato, only: [ :show, :edit, :update ]
   resources :instrutores, only: [ :new, :create ]
   
   resources :cursos do
@@ -30,4 +31,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "pages#home"
+
+  # Rota catch-all redirecionando rotas inexistentes para a home
+  match "*path", to: "application#not_found", via: :all, constraints: lambda { |req| req.path.exclude? 'rails/active_storage' }
 end

@@ -13,6 +13,7 @@ class Candidato < ApplicationRecord
 
   # Um candidato pode enviar vários arquivos de laudo (ActiveStorage)
   has_many_attached :laudos_medicos
+  has_one_attached :curriculo
 
   validates :laudos_medicos, attached: true,
                              content_type: ['application/pdf', 'image/jpeg', 'image/png'],
@@ -20,7 +21,8 @@ class Candidato < ApplicationRecord
                              limit: { min: 1, max: 3 }
 
   # Validações para garantir que o formulário obrigatório seja preenchido
-  validates :cidade, :estado, :data_nascimento, :escolaridade, presence: true
+  validates :cidade, :estado, :data_nascimento, :escolaridade, :telefone, :tipo_deficiencia, presence: true
+  validates :curriculo, attached: true, content_type: ['application/pdf'], size: { less_than: 5.megabytes }
   validates :trabalhando, :possui_beneficio, inclusion: { in: [true, false] }
   
   # Regra de Negócio: Exclusividade PcD

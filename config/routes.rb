@@ -1,23 +1,24 @@
 Rails.application.routes.draw do
+  root "pages#home"
   devise_for :usuarios
 
   devise_scope :usuario do
-    get 'login', to: 'devise/sessions#new'
-    get 'signup', to: 'devise/registrations#new'
-    delete 'logout', to: 'devise/sessions#destroy'
+    get "login", to: "devise/sessions#new"
+    get "signup", to: "devise/registrations#new"
+    delete "logout", to: "devise/sessions#destroy"
   end
 
   resources :candidatos, only: [ :new, :create ]
   resources :instrutores, only: [ :new, :create ]
-  
+
   resources :cursos do
     member do
       post :matricular
     end
   end
 
-  get 'admin/dashboard', to: 'dashboards#admin', as: :admin_dashboard
-  get 'aluno/dashboard', to: 'dashboards#aluno', as: :aluno_dashboard
+  get "admin/dashboard", to: "dashboards#admin", as: :admin_dashboard
+  get "aluno/dashboard", to: "dashboards#aluno", as: :aluno_dashboard
 
   get "about", to: "pages#about"
   get "contact", to: "pages#contact"
@@ -29,5 +30,4 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "pages#home"
 end

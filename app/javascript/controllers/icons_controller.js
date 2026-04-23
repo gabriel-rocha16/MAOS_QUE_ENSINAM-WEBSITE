@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus";
-// Adicionando os ícones da seção de Acessibilidade
 import {
   createIcons,
   Home,
@@ -23,6 +22,7 @@ import {
   Captions,
   HeartHandshake,
   ShieldCheck,
+  LogIn,
 } from "lucide";
 
 export default class extends Controller {
@@ -43,13 +43,14 @@ export default class extends Controller {
         PlayCircle,
         Users,
         User,
-        Keyboard, // Novo
-        Volume2, // Novo
-        Contrast, // Novo
-        Type, // Novo
-        Captions, // Novo
-        HeartHandshake, // Novo
-        ShieldCheck, // Novo
+        Keyboard,
+        Volume2,
+        Contrast,
+        Type,
+        Captions,
+        HeartHandshake,
+        ShieldCheck,
+        LogIn, // Adicionado aqui
       },
     });
   }
